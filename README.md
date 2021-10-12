@@ -366,7 +366,7 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [issues]: https://github.com/mineiros-io/terraform-google-cloud-router/issues
 [license]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/LICENSE
 [makefile]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/Makefile
-[pull requests]: https://github.com/mineiros-io/terraform-google-premium-modules/pulls
+[pull requests]: https://github.com/mineiros-io/terraform-google-cloud-router/pulls
 [contribution guidelines]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/CONTRIBUTING.md
 
 <!-- markdown-link-check-enable -->
