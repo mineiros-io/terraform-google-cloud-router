@@ -99,6 +99,6 @@ variable "module_enabled" {
 
 variable "module_depends_on" {
   description = "(Optional) A list of external resources the module depends_on. Default is '[]'."
-  type        = list(any)
+  type        = any
   default     = []
 }
