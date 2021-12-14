@@ -1,16 +1,16 @@
 header {
   image = "https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg"
-  url   = "https://mineiros.io/?ref=terraform-module-template"
+  url   = "https://mineiros.io/?ref=terraform-google-cloud-router"
 
   badge "build" {
-    image = "https://github.com/mineiros-io/terraform-module-template/workflows/Tests/badge.svg"
-    url   = "https://github.com/mineiros-io/terraform-module-template/actions"
+    image = "https://github.com/mineiros-io/terraform-google-cloud-router/workflows/Tests/badge.svg"
+    url   = "https://github.com/mineiros-io/terraform-google-cloud-router/actions"
     text  = "Build Status"
   }
 
   badge "semver" {
-    image = "https://img.shields.io/github/v/tag/mineiros-io/terraform-module-template.svg?label=latest&sort=semver"
-    url   = "https://github.com/mineiros-io/terraform-module-template/releases"
+    image = "https://img.shields.io/github/v/tag/mineiros-io/terraform-google-cloud-router.svg?label=latest&sort=semver"
+    url   = "https://github.com/mineiros-io/terraform-google-cloud-router/releases"
     text  = "GitHub tag (latest SemVer)"
   }
 
@@ -110,7 +110,7 @@ section {
         }
 
         variable "module_depends_on" {
-          type           = list(any)
+          type           = any
           readme_type    = "list(dependencies)"
           description    = <<-END
             A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
@@ -204,7 +204,7 @@ section {
           }
 
           attribute "advertised_ip_ranges" {
-            type        = list(any)
+            type        = any
             readme_type = "list(advertised_ip_ranges)"
             default     = []
             description = <<-END
@@ -236,7 +236,7 @@ section {
           title = "Terraform google cloud router nat"
 
           variable "nats" {
-            type        = list(any)
+            type        = any
             readme_type = "list(nat)"
             default     = []
             description = <<-END
@@ -341,7 +341,7 @@ section {
             }
 
             attribute "subnetworks" {
-              type        = list(any)
+              type        = any
               readme_type = "list(subnetwork)"
               default     = []
               description = <<-END
