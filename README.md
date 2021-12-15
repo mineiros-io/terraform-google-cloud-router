@@ -11,7 +11,7 @@
 A [Terraform] module for [Google Cloud Platform (GCP)][gcp].
 
 **_This module supports Terraform version 1
-and is compatible with the Terraform Google Provider version 3._**
+and is compatible with the Terraform Google Provider version 4._**
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
@@ -26,8 +26,10 @@ secure, and production-grade cloud infrastructure.
     - [Main Resource Configuration](#main-resource-configuration)
     - [Extended Resource Configuration](#extended-resource-configuration)
       - [Terraform google cloud router nat](#terraform-google-cloud-router-nat)
-- [Module Attributes Reference](#module-attributes-reference)
+- [Module Outputs](#module-outputs)
 - [External Documentation](#external-documentation)
+  - [Google Documentation](#google-documentation)
+  - [Terraform Google Provider Documentation](#terraform-google-provider-documentation)
 - [Module Versioning](#module-versioning)
   - [Backwards compatibility in `0.0.z` and `0.y.z` version](#backwards-compatibility-in-00z-and-0yz-version)
 - [About Mineiros](#about-mineiros)
@@ -275,7 +277,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
       Default is `"[]"`.
 
-## Module Attributes Reference
+## Module Outputs
 
 The following attributes are exported in the outputs of the module:
 
@@ -293,12 +295,14 @@ The following attributes are exported in the outputs of the module:
 
 ## External Documentation
 
-- Google Documentation:
-  - Router: <https://cloud.google.com/network-connectivity/docs/router>
+### Google Documentation
 
-- Terraform Google Provider Documentation:
-  - <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router>
-  - <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router_nat>
+- Router: <https://cloud.google.com/network-connectivity/docs/router>
+
+### Terraform Google Provider Documentation
+
+- <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router>
+- <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router_nat>
 
 ## Module Versioning
 
