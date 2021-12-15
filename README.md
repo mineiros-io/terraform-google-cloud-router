@@ -1,8 +1,10 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>][homepage]
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-google-cloud-router)
 
-[![Terraform Version][badge-terraform]][releases-terraform]
-[![Google Provider Version][badge-tf-gcp]][releases-google-provider]
-[![Join Slack][badge-slack]][slack]
+[![Build Status](https://github.com/mineiros-io/terraform-google-cloud-router/workflows/Tests/badge.svg)](https://github.com/mineiros-io/terraform-google-cloud-router/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mineiros-io/terraform-google-cloud-router.svg?label=latest&sort=semver)](https://github.com/mineiros-io/terraform-google-cloud-router/releases)
+[![Terraform Version](https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform)](https://github.com/hashicorp/terraform/releases)
+[![Google Provider Version](https://img.shields.io/badge/google-4-1A73E8.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-google/releases)
+[![Join Slack](https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack)](https://mineiros.io/slack)
 
 # terraform-google-cloud-router
 
@@ -14,6 +16,7 @@ and is compatible with the Terraform Google Provider version 3._**
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
+
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
@@ -77,16 +80,18 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Module Configuration
 
-- **`module_enabled`**: _(Optional `bool`)_
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
 
   Specifies whether resources in the module will be created.
+
   Default is `true`.
 
-- **`module_depends_on`**: _(Optional `list(dependencies)`)_
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependencies)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
 
   Example:
+
   ```hcl
   module_depends_on = [
     google_network.network
@@ -95,33 +100,34 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Main Resource Configuration
 
-- **`region`**: **_(Required `string`)_**
+- [**`region`**](#var-region): *(**Required** `string`)*<a name="var-region"></a>
 
   The region to host the VPC and all related resources in.
 
-- **`project`**: **_(Required `string`)_**
+- [**`project`**](#var-project): *(**Required** `string`)*<a name="var-project"></a>
 
   The ID of the project in which the resources belong.
 
-- **`network`**: **_(Required `string`)_**
+- [**`network`**](#var-network): *(**Required** `string`)*<a name="var-network"></a>
 
   A reference to the network to which this router belongs.
 
-- **`name`**: _(Optional `string`)_
+- [**`name`**](#var-name): *(Optional `string`)*<a name="var-name"></a>
 
   Name of the resource. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `'[a-z]([-a-z0-9]*[a-z0-9])?'` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
-  Default is `main`.
 
-- **`bgp`**: _(Optional `object(bgp)`)_
+  Default is `"main"`.
+
+- [**`bgp`**](#var-bgp): *(Optional `object(bgp)`)*<a name="var-bgp"></a>
 
   BGP information specific to this router.
 
   Each `bgp` object can have the following fields:
 
-  Example
+  Example:
 
-   ```hcl
-    bgp {
+  ```hcl
+  bgp {
     asn               = 64514
     advertise_mode    = "CUSTOM"
     advertised_groups = ["ALL_SUBNETS"]
@@ -130,35 +136,40 @@ See [variables.tf] and [examples/] for details and use-cases.
     }
     advertised_ip_ranges {
       range = "6.7.0.0/16"
-    }
-   ```
+  }
+  ```
 
-  - **`asn`**: **_(Required `string`)_**
+  The object accepts the following attributes:
+
+  - [**`asn`**](#attr-asn-1): *(**Required** `string`)*<a name="attr-asn-1"></a>
 
     Local BGP Autonomous System Number `(ASN)`. Must be an RFC6996 private ASN, either `16-bit` or `32-bit`. The value will be fixed for this router resource. All VPN tunnels that link to this router will have the same local ASN.
 
-  - **`advertise_mode`**: _(Optional `string`)_
+  - [**`advertise_mode`**](#attr-advertise_mode-1): *(Optional `string`)*<a name="attr-advertise_mode-1"></a>
 
     User-specified flag to indicate which mode to use for advertisement. Possible values are `DEFAULT` and `CUSTOM`.
-    Default is `DEFAULT`.
 
-  - **`advertised_groups`**: _(Optional `list(string)`)_
+    Default is `"DEFAULT"`.
+
+  - [**`advertised_groups`**](#attr-advertised_groups-1): *(Optional `list(string)`)*<a name="attr-advertised_groups-1"></a>
 
     User-specified list of prefix groups to advertise in custom mode. This field can only be populated if advertiseMode is `CUSTOM` and is advertised to all peers of the router. These groups will be advertised in addition to any specified prefixes. Leave this field blank to advertise no custom groups. This enum field has the one valid value: `ALL_SUBNETS`
+
     Default is `[]`.
 
-  - **`advertised_ip_ranges`** _(Optional `list(advertised_ip_range)`)
+  - [**`advertised_ip_ranges`**](#attr-advertised_ip_ranges-1): *(Optional `list(advertised_ip_ranges)`)*<a name="attr-advertised_ip_ranges-1"></a>
 
     User-specified list of individual IP ranges to advertise in custom mode. This field can only be populated if advertiseMode is `CUSTOM` and is advertised to all peers of the router. These IP ranges will be advertised in addition to any specified groups. Leave this field blank to advertise no custom IP ranges.
-    Default is `[]`
 
-    Each `advertised_ip_range` object can have the following fields:
+    Default is `[]`.
 
-    - **`range`**: **_(Required `string`)_**
+    The object accepts the following attributes:
+
+    - [**`range`**](#attr-range-2): *(**Required** `string`)*<a name="attr-range-2"></a>
 
       The IP range to advertise. The value must be a CIDR-formatted string.
 
-    - **`description`**: _(Optional `string`)_
+    - [**`description`**](#attr-description-2): *(Optional `string`)*<a name="attr-description-2"></a>
 
       User-specified description for the IP range.
 
@@ -166,91 +177,103 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 ##### Terraform google cloud router nat
 
-- **`nats`**: _(Optional `list(nat)`)_
+- [**`nats`**](#var-nats): *(Optional `list(nat)`)*<a name="var-nats"></a>
 
   NATs to deploy on this router.
+
   Default is `[]`.
 
-  Each `nat` object can have the following fields:
+  The object accepts the following attributes:
 
-  - **`name`**: **_(Required `string`)_**
+  - [**`name`**](#attr-name-1): *(**Required** `string`)*<a name="attr-name-1"></a>
 
     Name of the NAT.
 
-  - **`nat_ip_allocate_option`**: _(Optional `string`)_
+  - [**`nat_ip_allocate_option`**](#attr-nat_ip_allocate_option-1): *(Optional `string`)*<a name="attr-nat_ip_allocate_option-1"></a>
 
-    How external IPs should be allocated for this NAT. Defaults to `MANUAL_ONLY` if nat_ips are set, else `AUTO_ONLY`.
-    Default is `AUTO_ONLY`.
+    How external IPs should be allocated for this NAT.
 
-  - **`source_subnetwork_ip_ranges_to_nat`**: _(Optional `string`)_
+    Default is `"AUTO_ONLY"`.
+
+  - [**`source_subnetwork_ip_ranges_to_nat`**](#attr-source_subnetwork_ip_ranges_to_nat-1): *(Optional `string`)*<a name="attr-source_subnetwork_ip_ranges_to_nat-1"></a>
 
     How NAT should be configured per Subnetwork.
-    Default is `ALL_SUBNETWORKS_ALL_IP_RANGES`.
 
-  - **`nat_ips`**: _(Optional `list(number)`)_
+    Default is `"ALL_SUBNETWORKS_ALL_IP_RANGES"`.
+
+  - [**`nat_ips`**](#attr-nat_ips-1): *(Optional `list(number)`)*<a name="attr-nat_ips-1"></a>
 
     Self-links of NAT IPs. Only valid if `natIpAllocateOption` is set to MANUAL_ONLY.
 
-  - **`min_ports_per_vm`**: _(Optional `number`)_
+  - [**`min_ports_per_vm`**](#attr-min_ports_per_vm-1): *(Optional `number`)*<a name="attr-min_ports_per_vm-1"></a>
 
     Minimum number of ports allocated to a VM from this NAT.
 
-  - **`udp_idle_timeout_sec`**: _(Optional `number`)_
+  - [**`udp_idle_timeout_sec`**](#attr-udp_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-udp_idle_timeout_sec-1"></a>
 
-    Timeout (in seconds) for UDP connections. Defaults to 30s if not set.
+    Timeout (in seconds) for UDP connections.
+
     Default is `30`.
 
-  - **`icmp_idle_timeout_sec`**: _(Optional `number`)_
+  - [**`icmp_idle_timeout_sec`**](#attr-icmp_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-icmp_idle_timeout_sec-1"></a>
 
-    Timeout (in seconds) for ICMP connections. Defaults to 30s if not set.
+    Timeout (in seconds) for ICMP connections.
+
     Default is `30`.
 
-  - **`tcp_established_idle_timeout_sec`**: _(Optional `number`)_
+  - [**`tcp_established_idle_timeout_sec`**](#attr-tcp_established_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-tcp_established_idle_timeout_sec-1"></a>
 
-    Timeout (in seconds) for TCP established connections. Defaults to 1200s if not set.
+    Timeout (in seconds) for TCP established connections.
+
     Default is `1200`.
 
-  - **`tcp_transitory_idle_timeout_sec`**: _(Optional `number`)_
+  - [**`tcp_transitory_idle_timeout_sec`**](#attr-tcp_transitory_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-tcp_transitory_idle_timeout_sec-1"></a>
 
-    Timeout (in seconds) for TCP transitory connections. Defaults to 30s if not set.
+    Timeout (in seconds) for TCP transitory connections.
+
     Default is `30`.
 
-  - **`log_config`**: _(Optional `object`)_
+  - [**`log_config`**](#attr-log_config-1): *(Optional `object`)*<a name="attr-log_config-1"></a>
 
     Configuration for logging on NAT.
+
     Default is `[]`.
 
-    Each `log_config` object can have the following fields:
+    The object accepts the following attributes:
 
-    - **`enabled`**: **_(Required `bool`)_**
+    - [**`enabled`**](#attr-enabled-2): *(**Required** `bool`)*<a name="attr-enabled-2"></a>
 
       Indicates whether or not to export logs.
-      Defaults is `true`.
 
-    - **`filter`**: **_(Required `string`)_**
+      Default is `true`.
+
+    - [**`filter`**](#attr-filter-2): *(**Required** `string`)*<a name="attr-filter-2"></a>
 
       Specifies the desired filtering of logs on this NAT.
-      Defaults is `"ALL"`.
 
-  - **`subnetworks`**: _(Optional `list(subnetwork)`)_
+      Default is `"ALL"`.
+
+  - [**`subnetworks`**](#attr-subnetworks-1): *(Optional `list(subnetwork)`)*<a name="attr-subnetworks-1"></a>
 
     Configuration for logging on NAT.
+
     Default is `[]`.
 
-    Each `subnetwork` object can have the following fields:
+    The object accepts the following attributes:
 
-    - **`name`**: **_(Required `string`)_**
+    - [**`name`**](#attr-name-2): *(**Required** `string`)*<a name="attr-name-2"></a>
 
       Self-link of subnetwork to NAT.
 
-    - **`source_ip_ranges_to_nat`**: **_(Required `string`)_**
+    - [**`source_ip_ranges_to_nat`**](#attr-source_ip_ranges_to_nat-2): *(**Required** `string`)*<a name="attr-source_ip_ranges_to_nat-2"></a>
 
       List of options for which source IPs in the subnetwork should have NAT enabled.
 
-    - **`secondary_ip_range_names`**: _(Optional `string`)_
+    - [**`secondary_ip_range_names`**](#attr-secondary_ip_range_names-2): *(Optional `string`)*<a name="attr-secondary_ip_range_names-2"></a>
 
       List of the secondary ranges of the subnetwork that are allowed to use NAT.
-      Defaults is `[]`.
+
+      Default is `"[]"`.
 
 ## Module Attributes Reference
 
@@ -261,6 +284,7 @@ The following attributes are exported in the outputs of the module:
   Whether this module is enabled.
 
 - **`router`**
+
   The outputs of the created Cloud Router.
 
 - **`nats`**
@@ -324,32 +348,20 @@ Run `make help` to see details on each available target.
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
-Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
+Copyright &copy; 2020-2022 [Mineiros GmbH][homepage]
 
 
 <!-- References -->
 
 [homepage]: https://mineiros.io/?ref=terraform-google-cloud-router
 [hello@mineiros.io]: mailto:hello@mineiros.io
-
-<!-- markdown-link-check-disable -->
-
 [badge-build]: https://github.com/mineiros-io/terraform-google-cloud-router/workflows/Tests/badge.svg
-
-<!-- markdown-link-check-enable -->
-
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-google-cloud-router.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
 [badge-terraform]: https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
-
-<!-- markdown-link-check-disable -->
-
 [build-status]: https://github.com/mineiros-io/terraform-google-cloud-router/actions
 [releases-github]: https://github.com/mineiros-io/terraform-google-cloud-router/releases
-
-<!-- markdown-link-check-enable -->
-
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [badge-tf-gcp]: https://img.shields.io/badge/google-3.x-1A73E8.svg?logo=terraform
 [releases-google-provider]: https://github.com/terraform-providers/terraform-provider-google/releases
@@ -358,9 +370,6 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [terraform]: https://www.terraform.io
 [gcp]: https://cloud.google.com/
 [semantic versioning (semver)]: https://semver.org/
-
-<!-- markdown-link-check-disable -->
-
 [variables.tf]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/variables.tf
 [examples/]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/examples
 [issues]: https://github.com/mineiros-io/terraform-google-cloud-router/issues
@@ -368,5 +377,3 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [makefile]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/Makefile
 [pull requests]: https://github.com/mineiros-io/terraform-google-cloud-router/pulls
 [contribution guidelines]: https://github.com/mineiros-io/terraform-google-cloud-router/blob/main/CONTRIBUTING.md
-
-<!-- markdown-link-check-enable -->
