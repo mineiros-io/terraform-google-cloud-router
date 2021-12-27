@@ -134,19 +134,18 @@ section {
           END
         }
 
-        variable "project" {
-          required    = true
-          type        = string
-          description = <<-END
-            The ID of the project in which the resources belong.
-          END
-        }
-
         variable "network" {
           required    = true
           type        = string
           description = <<-END
             A reference to the network to which this router belongs.
+          END
+        }
+
+        variable "project" {
+          type        = string
+          description = <<-END
+            The ID of the project in which the resource belongs. If it is not set, the provider project is used.
           END
         }
 
