@@ -106,13 +106,13 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The region to host the VPC and all related resources in.
 
-- [**`project`**](#var-project): *(**Required** `string`)*<a name="var-project"></a>
-
-  The ID of the project in which the resources belong.
-
 - [**`network`**](#var-network): *(**Required** `string`)*<a name="var-network"></a>
 
   A reference to the network to which this router belongs.
+
+- [**`project`**](#var-project): *(Optional `string`)*<a name="var-project"></a>
+
+  The ID of the project in which the resource belongs. If it is not set, the provider project is used.
 
 - [**`name`**](#var-name): *(Optional `string`)*<a name="var-name"></a>
 
@@ -143,23 +143,23 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The object accepts the following attributes:
 
-  - [**`asn`**](#attr-asn-1): *(**Required** `string`)*<a name="attr-asn-1"></a>
+  - [**`asn`**](#attr-asn-bgp): *(**Required** `string`)*<a name="attr-asn-bgp"></a>
 
     Local BGP Autonomous System Number `(ASN)`. Must be an RFC6996 private ASN, either `16-bit` or `32-bit`. The value will be fixed for this router resource. All VPN tunnels that link to this router will have the same local ASN.
 
-  - [**`advertise_mode`**](#attr-advertise_mode-1): *(Optional `string`)*<a name="attr-advertise_mode-1"></a>
+  - [**`advertise_mode`**](#attr-advertise_mode-bgp): *(Optional `string`)*<a name="attr-advertise_mode-bgp"></a>
 
     User-specified flag to indicate which mode to use for advertisement. Possible values are `DEFAULT` and `CUSTOM`.
 
     Default is `"DEFAULT"`.
 
-  - [**`advertised_groups`**](#attr-advertised_groups-1): *(Optional `list(string)`)*<a name="attr-advertised_groups-1"></a>
+  - [**`advertised_groups`**](#attr-advertised_groups-bgp): *(Optional `list(string)`)*<a name="attr-advertised_groups-bgp"></a>
 
     User-specified list of prefix groups to advertise in custom mode. This field can only be populated if advertiseMode is `CUSTOM` and is advertised to all peers of the router. These groups will be advertised in addition to any specified prefixes. Leave this field blank to advertise no custom groups. This enum field has the one valid value: `ALL_SUBNETS`
 
     Default is `[]`.
 
-  - [**`advertised_ip_ranges`**](#attr-advertised_ip_ranges-1): *(Optional `list(advertised_ip_ranges)`)*<a name="attr-advertised_ip_ranges-1"></a>
+  - [**`advertised_ip_ranges`**](#attr-advertised_ip_ranges-bgp): *(Optional `list(advertised_ip_ranges)`)*<a name="attr-advertised_ip_ranges-bgp"></a>
 
     User-specified list of individual IP ranges to advertise in custom mode. This field can only be populated if advertiseMode is `CUSTOM` and is advertised to all peers of the router. These IP ranges will be advertised in addition to any specified groups. Leave this field blank to advertise no custom IP ranges.
 
@@ -167,11 +167,11 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     The object accepts the following attributes:
 
-    - [**`range`**](#attr-range-2): *(**Required** `string`)*<a name="attr-range-2"></a>
+    - [**`range`**](#attr-range-advertised_ip_ranges-bgp): *(**Required** `string`)*<a name="attr-range-advertised_ip_ranges-bgp"></a>
 
       The IP range to advertise. The value must be a CIDR-formatted string.
 
-    - [**`description`**](#attr-description-2): *(Optional `string`)*<a name="attr-description-2"></a>
+    - [**`description`**](#attr-description-advertised_ip_ranges-bgp): *(Optional `string`)*<a name="attr-description-advertised_ip_ranges-bgp"></a>
 
       User-specified description for the IP range.
 
@@ -187,55 +187,55 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The object accepts the following attributes:
 
-  - [**`name`**](#attr-name-1): *(**Required** `string`)*<a name="attr-name-1"></a>
+  - [**`name`**](#attr-name-nats): *(**Required** `string`)*<a name="attr-name-nats"></a>
 
     Name of the NAT.
 
-  - [**`nat_ip_allocate_option`**](#attr-nat_ip_allocate_option-1): *(Optional `string`)*<a name="attr-nat_ip_allocate_option-1"></a>
+  - [**`nat_ip_allocate_option`**](#attr-nat_ip_allocate_option-nats): *(Optional `string`)*<a name="attr-nat_ip_allocate_option-nats"></a>
 
     How external IPs should be allocated for this NAT.
 
     Default is `"AUTO_ONLY"`.
 
-  - [**`source_subnetwork_ip_ranges_to_nat`**](#attr-source_subnetwork_ip_ranges_to_nat-1): *(Optional `string`)*<a name="attr-source_subnetwork_ip_ranges_to_nat-1"></a>
+  - [**`source_subnetwork_ip_ranges_to_nat`**](#attr-source_subnetwork_ip_ranges_to_nat-nats): *(Optional `string`)*<a name="attr-source_subnetwork_ip_ranges_to_nat-nats"></a>
 
     How NAT should be configured per Subnetwork.
 
     Default is `"ALL_SUBNETWORKS_ALL_IP_RANGES"`.
 
-  - [**`nat_ips`**](#attr-nat_ips-1): *(Optional `list(number)`)*<a name="attr-nat_ips-1"></a>
+  - [**`nat_ips`**](#attr-nat_ips-nats): *(Optional `list(number)`)*<a name="attr-nat_ips-nats"></a>
 
     Self-links of NAT IPs. Only valid if `natIpAllocateOption` is set to MANUAL_ONLY.
 
-  - [**`min_ports_per_vm`**](#attr-min_ports_per_vm-1): *(Optional `number`)*<a name="attr-min_ports_per_vm-1"></a>
+  - [**`min_ports_per_vm`**](#attr-min_ports_per_vm-nats): *(Optional `number`)*<a name="attr-min_ports_per_vm-nats"></a>
 
     Minimum number of ports allocated to a VM from this NAT.
 
-  - [**`udp_idle_timeout_sec`**](#attr-udp_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-udp_idle_timeout_sec-1"></a>
+  - [**`udp_idle_timeout_sec`**](#attr-udp_idle_timeout_sec-nats): *(Optional `number`)*<a name="attr-udp_idle_timeout_sec-nats"></a>
 
     Timeout (in seconds) for UDP connections.
 
     Default is `30`.
 
-  - [**`icmp_idle_timeout_sec`**](#attr-icmp_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-icmp_idle_timeout_sec-1"></a>
+  - [**`icmp_idle_timeout_sec`**](#attr-icmp_idle_timeout_sec-nats): *(Optional `number`)*<a name="attr-icmp_idle_timeout_sec-nats"></a>
 
     Timeout (in seconds) for ICMP connections.
 
     Default is `30`.
 
-  - [**`tcp_established_idle_timeout_sec`**](#attr-tcp_established_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-tcp_established_idle_timeout_sec-1"></a>
+  - [**`tcp_established_idle_timeout_sec`**](#attr-tcp_established_idle_timeout_sec-nats): *(Optional `number`)*<a name="attr-tcp_established_idle_timeout_sec-nats"></a>
 
     Timeout (in seconds) for TCP established connections.
 
     Default is `1200`.
 
-  - [**`tcp_transitory_idle_timeout_sec`**](#attr-tcp_transitory_idle_timeout_sec-1): *(Optional `number`)*<a name="attr-tcp_transitory_idle_timeout_sec-1"></a>
+  - [**`tcp_transitory_idle_timeout_sec`**](#attr-tcp_transitory_idle_timeout_sec-nats): *(Optional `number`)*<a name="attr-tcp_transitory_idle_timeout_sec-nats"></a>
 
     Timeout (in seconds) for TCP transitory connections.
 
     Default is `30`.
 
-  - [**`log_config`**](#attr-log_config-1): *(Optional `object`)*<a name="attr-log_config-1"></a>
+  - [**`log_config`**](#attr-log_config-nats): *(Optional `object`)*<a name="attr-log_config-nats"></a>
 
     Configuration for logging on NAT.
 
@@ -243,19 +243,19 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     The object accepts the following attributes:
 
-    - [**`enabled`**](#attr-enabled-2): *(**Required** `bool`)*<a name="attr-enabled-2"></a>
+    - [**`enabled`**](#attr-enabled-log_config-nats): *(**Required** `bool`)*<a name="attr-enabled-log_config-nats"></a>
 
       Indicates whether or not to export logs.
 
       Default is `true`.
 
-    - [**`filter`**](#attr-filter-2): *(**Required** `string`)*<a name="attr-filter-2"></a>
+    - [**`filter`**](#attr-filter-log_config-nats): *(**Required** `string`)*<a name="attr-filter-log_config-nats"></a>
 
       Specifies the desired filtering of logs on this NAT.
 
       Default is `"ALL"`.
 
-  - [**`subnetworks`**](#attr-subnetworks-1): *(Optional `list(subnetwork)`)*<a name="attr-subnetworks-1"></a>
+  - [**`subnetworks`**](#attr-subnetworks-nats): *(Optional `list(subnetwork)`)*<a name="attr-subnetworks-nats"></a>
 
     Configuration for logging on NAT.
 
@@ -263,15 +263,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     The object accepts the following attributes:
 
-    - [**`name`**](#attr-name-2): *(**Required** `string`)*<a name="attr-name-2"></a>
+    - [**`name`**](#attr-name-subnetworks-nats): *(**Required** `string`)*<a name="attr-name-subnetworks-nats"></a>
 
       Self-link of subnetwork to NAT.
 
-    - [**`source_ip_ranges_to_nat`**](#attr-source_ip_ranges_to_nat-2): *(**Required** `string`)*<a name="attr-source_ip_ranges_to_nat-2"></a>
+    - [**`source_ip_ranges_to_nat`**](#attr-source_ip_ranges_to_nat-subnetworks-nats): *(**Required** `string`)*<a name="attr-source_ip_ranges_to_nat-subnetworks-nats"></a>
 
       List of options for which source IPs in the subnetwork should have NAT enabled.
 
-    - [**`secondary_ip_range_names`**](#attr-secondary_ip_range_names-2): *(Optional `string`)*<a name="attr-secondary_ip_range_names-2"></a>
+    - [**`secondary_ip_range_names`**](#attr-secondary_ip_range_names-subnetworks-nats): *(Optional `string`)*<a name="attr-secondary_ip_range_names-subnetworks-nats"></a>
 
       List of the secondary ranges of the subnetwork that are allowed to use NAT.
 
