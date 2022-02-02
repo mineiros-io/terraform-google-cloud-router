@@ -110,8 +110,7 @@ section {
         }
 
         variable "module_depends_on" {
-          type           = any
-          readme_type    = "list(dependencies)"
+          type           = list(dependency)
           description    = <<-END
             A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
           END
@@ -158,8 +157,7 @@ section {
         }
 
         variable "bgp" {
-          type           = any
-          readme_type    = "object(bgp)"
+          type           = object(bgp)
           description    = <<-END
             BGP information specific to this router.
 
@@ -203,8 +201,7 @@ section {
           }
 
           attribute "advertised_ip_ranges" {
-            type        = any
-            readme_type = "list(advertised_ip_ranges)"
+            type        = list(advertised_ip_range)
             default     = []
             description = <<-END
               User-specified list of individual IP ranges to advertise in custom mode. This field can only be populated if advertiseMode is `CUSTOM` and is advertised to all peers of the router. These IP ranges will be advertised in addition to any specified groups. Leave this field blank to advertise no custom IP ranges.
@@ -235,8 +232,7 @@ section {
           title = "Terraform google cloud router nat"
 
           variable "nats" {
-            type        = any
-            readme_type = "list(nat)"
+            type        = list(nat)
             default     = []
             description = <<-END
               NATs to deploy on this router.
@@ -313,8 +309,7 @@ section {
             }
 
             attribute "log_config" {
-              type        = any
-              readme_type = "object"
+              type        = object(log_config)
               default     = []
               description = <<-END
                 Configuration for logging on NAT.
@@ -340,8 +335,7 @@ section {
             }
 
             attribute "subnetworks" {
-              type        = any
-              readme_type = "list(subnetwork)"
+              type        = list(subnetwork)
               default     = []
               description = <<-END
                 Configuration for logging on NAT.
@@ -381,35 +375,42 @@ section {
     title   = "Module Outputs"
     content = <<-END
       The following attributes are exported in the outputs of the module:
-
-      - **`module_enabled`**
-
-        Whether this module is enabled.
-
-      - **`router`**
-
-        The outputs of the created Cloud Router.
-
-      - **`nats`**
-
-        The outputs of the create Cloud NATs.
     END
+
+    output "module_enabled" {
+      type        = bool
+      description = <<-END
+        Whether this module is enabled.
+      END
+    }
+
+    output "router" {
+      type        = object(router)
+      description = <<-END
+        The outputs of the created Cloud Router.
+      END
+    }
+
+    output "nats" {
+      type        = list(nat)
+      description = <<-END
+        The outputs of the create Cloud NATs.
+      END
+    }
   }
 
   section {
-    title   = "External Documentation"
+    title = "External Documentation"
 
     section {
-      title = "Google Documentation"
-
+      title   = "Google Documentation"
       content = <<-END
         - Router: <https://cloud.google.com/network-connectivity/docs/router>
       END
     }
 
     section {
-      title = "Terraform Google Provider Documentation"
-
+      title   = "Terraform Google Provider Documentation"
       content = <<-END
         - <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router>
         - <https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router_nat>
