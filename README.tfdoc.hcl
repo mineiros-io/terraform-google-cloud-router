@@ -83,7 +83,7 @@ section {
 
       ```hcl
       module "terraform-google-cloud-router" {
-        source = "github.com/mineiros-io/terraform-google-cloud-router.git?ref=v0.1.0"
+        source = "github.com/mineiros-io/terraform-google-cloud-router.git?ref=v0.0.2"
       }
       ```
     END
