@@ -9,7 +9,8 @@ resource "google_compute_router_nat" "nat" {
   project = google_compute_router.router[0].project
   router  = google_compute_router.router[0].name
   region  = google_compute_router.router[0].region
-
+  enable_dynamic_port_allocation = false
+  enable_endpoint_independent_mapping = false
   nat_ip_allocate_option             = try(each.value.nat_ip_allocate_option, length(try(each.value.nat_ips, [])) > 0 ? "MANUAL_ONLY" : "AUTO_ONLY")
   source_subnetwork_ip_ranges_to_nat = try(each.value.source_subnetwork_ip_ranges_to_nat, "ALL_SUBNETWORKS_ALL_IP_RANGES")
 
