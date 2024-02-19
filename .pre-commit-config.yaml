@@ -1,10 +1,18 @@
 repos:
   - repo: https://github.com/mineiros-io/pre-commit-hooks
-    rev: v0.3.0
+    rev: v0.5.1
     hooks:
+      - id: phony-targets
+      - id: terradoc-validate
+      - id: terradoc-fmt
+      - id: terradoc-generate
+      - id: terramate-generate
       - id: terraform-fmt
       - id: terraform-validate
         exclude: ^examples|.terraform/
       - id: tflint
-      - id: golangci-lint
-      - id: phony-targets
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
+        args: ['-s']
